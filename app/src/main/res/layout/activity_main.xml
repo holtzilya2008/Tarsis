@@ -145,6 +145,14 @@
 
     </FrameLayout>
 
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="120dp"
+        android:text="TEST"
+        android:textSize="80dp"
+        android:id="@+id/testButton"
+        android:layout_alignBottom="@+id/questionText"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

@@ -3,7 +3,6 @@
 
     //Question Strings
 
-
     <string name="demo_qproperties">סדרה 1    תרסיס 1</string>
     <string name="sidra_word">סדרה</string>
     <string name="tarsis_word">תרסיס</string>
@@ -11,11 +10,11 @@
     <string name="tasty_question">עד כמה טעים</string>
 
 
-<!--    <string name="demo_qproperties">Sidra 1 Tarsis 1</string>
-    <string name="sidra_word">Sidra</string>
-    <string name="tarsis_word">Tarsis</string>
-    <string name="strong_question">How strong</string>
-    <string name="tasty_question">How Tasty</string>-->
+    <!--    <string name="demo_qproperties">Sidra 1 Tarsis 1</string>
+        <string name="sidra_word">Sidra</string>
+        <string name="tarsis_word">Tarsis</string>
+        <string name="strong_question">How strong</string>
+        <string name="tasty_question">How Tasty</string>-->
 
 
 </resources>

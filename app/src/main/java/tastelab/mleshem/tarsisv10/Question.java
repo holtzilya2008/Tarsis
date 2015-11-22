@@ -1,5 +1,6 @@
 package tastelab.mleshem.tarsisv10;
 
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,6 +8,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.util.Comparator;
 
 /**
  * Created by ilya on 11/18/15.
@@ -26,7 +29,6 @@ public class Question {
 
     //Question Type
     private int about; //Strong or Tasty
-    private int tarsisType; // Salty or Sweet
 
     //Question and answer environment
     private TextView questionText;
@@ -42,14 +44,19 @@ public class Question {
     public static final int STRONG = 0;
     public static final int TASTY = 1;
 
-    private static final String SIDRA_WORD = String.valueOf(R.string.sidra_word);
-    private static final String TARSIS_WORD = String.valueOf(R.string.tarsis_word);
-    private static final String QUESTION_STRONG = String.valueOf(R.string.strong_question);
-    private static final String QUESTION_TASTY = String.valueOf(R.string.tasty_question);
+    private static String SIDRA_WORD;
+    private static String TARSIS_WORD;
+    private static String QUESTION_STRONG;
+    private static String QUESTION_TASTY;
 
     private static final int INIT_ANSWER = -1;
-    private static final int DEFAULT_PROGRESS = R.integer.default_progress;
-    private static final int MAX_PROGRESS = R.integer.max_progress;
+    private static int DEFAULT_PROGRESS;
+    private static int MAX_PROGRESS;
+
+    //Comparing between questions (for output sorting)
+    private static final int GREATER = 1;
+    private static final int EQUAL = 0;
+    private static final int SMALLER = -1;
 
 /* ---------------------------- DEBUG Environment -------------------------- */
 
@@ -62,16 +69,21 @@ public class Question {
                     int tarsisFake,
                     int tarsisReal,
                     int order,
-                    int about,
-                    int tarsisType) {
+                    int about) {
         this.activity = activity;
         this.qid = qid;
         this.tarsisFake = tarsisFake;
         this.tarsisReal = tarsisReal;
         this.order = order;
         this.about = about;
-        this.tarsisType = tarsisType;
         this.isActive = false;
+
+        this.DEFAULT_PROGRESS =activity.getResources().getInteger(R.integer.default_progress);
+        this.MAX_PROGRESS = activity.getResources().getInteger(R.integer.max_progress);
+        this.SIDRA_WORD =activity.getResources().getString(R.string.sidra_word);
+        this.TARSIS_WORD = activity.getResources().getString(R.string.tarsis_word);
+        this.QUESTION_STRONG = activity.getResources().getString(R.string.strong_question);
+        this.QUESTION_TASTY = activity.getResources().getString(R.string.tasty_question);
 
         loadQuestionEnvironment();
     }
@@ -96,8 +108,11 @@ public class Question {
     }
 
     public void SetAnswer(int ans){
-        this.answer = ans;
-        this.isAnswered = true;
+        if(isActive) {
+            this.answer = ans;
+            this.isAnswered = true;
+            showAnswer();
+        }
     }
 
     public boolean isAnswered(){
@@ -128,10 +143,38 @@ public class Question {
 
     @Override
     public String toString() {
-        return ""+answer; //TODO make a number of zeros generator
+        return ""+printZeros()+answer;
     }
 
-    /* ---------------------------- Private Methods ---------------------------- */
+/* ----------------------------- Object Comparator ------------------------- */
+
+    public static Comparator<Question> MyComparator = new Comparator<Question>() {
+        @Override
+        public int compare(Question lhs, Question rhs) {
+            if(lhs.order < rhs.order){
+                return SMALLER;
+            }else if (lhs.order > rhs.order){
+                return GREATER;
+            }else{    // Their order is equal
+
+                if(lhs.tarsisReal < rhs.tarsisReal){
+                    return SMALLER;
+                }else if (lhs.tarsisReal > rhs.tarsisReal){
+                    return GREATER;
+                }else{      //Their order and tarsisReal is equal
+
+                    if(lhs.about < rhs.about){
+                        return SMALLER;
+                    }else{
+                        return GREATER;
+                    }
+
+                }
+            }
+        }
+    };
+
+/* ---------------------------- Private Methods ---------------------------- */
 
     private void loadQuestionEnvironment(){
         this.questionText = (TextView)activity.findViewById(R.id.questionText);
@@ -153,17 +196,36 @@ public class Question {
         }else if(about == TASTY){
             this.questionText.setText(QUESTION_TASTY + "?");
         }
-        this.questionProperties.setText(SIDRA_WORD + " " + this.order "   " +
+        this.questionProperties.setText(SIDRA_WORD + " " + this.order + "   " +
                                         TARSIS_WORD + " " + this.tarsisFake);
         if(isAnswered) {
-            seekBar.setProgress(answer);
-            answerText.setText(answer+"/"+MAX_PROGRESS);
+            showAnswer();
         }else{
             seekBar.setProgress(DEFAULT_PROGRESS);
-            answerText.setText(DEFAULT_PROGRESS + "/" + MAX_PROGRESS);
+            String defaultAnswer = ""+DEFAULT_PROGRESS + "/" + MAX_PROGRESS;
+            answerText.setText(defaultAnswer);
             Log.d(TAG,"Question" + qid + " :Is not been answered yet, " +
                     "setting the default values");
         }
+    }
+
+    private void showAnswer(){
+        seekBar.setProgress(answer);
+        String ans = "" + answer+"/"+MAX_PROGRESS;
+        answerText.setText(ans);
+    }
+
+    private String printZeros(){
+        int tmp = this.answer;
+        String zeros = "";
+        int count = 0;
+        while((tmp/=10)!=0){
+            count++;
+        }
+        for(int i=0;i<2-count;i++){
+            zeros = zeros +"0";
+        }
+        return zeros;
     }
 
 } // End of Class Question ------------------------------------------------- //
