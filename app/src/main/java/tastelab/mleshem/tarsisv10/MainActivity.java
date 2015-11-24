@@ -1,6 +1,7 @@
 package tastelab.mleshem.tarsisv10;
 
 import android.app.Activity;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 /* -------------------------------- fields *-------------------------------- */
 
+    private MainActivity currentActivity;
     private ArrayList<View> views;
 
     private Button testButton;
@@ -28,9 +30,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        currentActivity = this;
         prepareViews();
-        current = new Experiment(this,new Sequence(1),0);
-        setTest();
+        StartExperiment();
     }
 
     private void prepareViews(){
@@ -51,27 +53,25 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void setTest(){
-        testButton = (Button)findViewById(R.id.testButton);
-        testButton.setVisibility(View.VISIBLE);
-        testButton.setClickable(true);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                testButton.setVisibility(View.GONE);
-                testButton.setClickable(false);
-                current.Start();
-            }
-        });
-    }
-
 /* ----------------------------- Public Methods ---------------------------- */
 
-    public void restartTest(){
-        prepareViews();
-        testButton = (Button)findViewById(R.id.testButton);
-        testButton.setVisibility(View.VISIBLE);
-        testButton.setClickable(true);
+    public void StartExperiment(){
+        current = new Experiment(this,new Sequence(1),0);
+        current.Start();
+    }
+
+    public void FinishExperiment(){
+        final CountDownTimer shutdown = new CountDownTimer(2000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                currentActivity.finish();
+            }
+        }.start();
     }
 
 /* --------------------------- Qverride Methods ---------------------------- */

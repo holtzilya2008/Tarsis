@@ -93,7 +93,11 @@ public class Experiment {
     }
 
     public void Destroy(){
-
+        this.state = DESTROYED;
+        this.backButton.setVisibility(View.GONE);
+        this.nextButton.setVisibility(View.GONE);
+        this.current = -1;
+        activity.FinishExperiment();
     }
 
 /* ----------------------------- Object Methods ---------------------------- */
@@ -259,7 +263,7 @@ public class Experiment {
         }
         this.state = FINISHED;
         GetResults();       // TODO - Complete finish screen
-        activity.restartTest();
+        Destroy();
     }
 
     private boolean isAllAnswered(){
