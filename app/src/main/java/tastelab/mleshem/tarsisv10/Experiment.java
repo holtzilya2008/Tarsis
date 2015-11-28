@@ -30,6 +30,7 @@ public class Experiment {
     private SeekBar tastyBar;
     private ImageButton backButton;
     private ImageButton nextButton;
+    private FinishScreen finishScreen;
 
     //Controller
     private Controller controller = Controller.getInstance();
@@ -76,6 +77,7 @@ public class Experiment {
         this.sequence = sequence;
         prepareEnvironment();
         prepareQuestions();
+        this.finishScreen = null;
         this.state = INIT;
 
         this.DEFAULT_PROGRESS =activity.getResources().getInteger(R.integer.default_progress);
@@ -98,8 +100,8 @@ public class Experiment {
             controller.getExperimentData().SetResult(result);
             return result;
         }
-        Log.d(TAG,"BUG method GetResults can't be called in this state!\n" +
-        "State =  "+state);
+        Log.d(TAG, "BUG method GetResults can't be called in this state!\n" +
+                "State =  " + state);
         return null;
     }
 
@@ -109,6 +111,12 @@ public class Experiment {
         }
         Log.d(TAG,"BUG method Review shouldn't be called in this state!\n" +
                 "State =  "+state);
+    }
+
+    public void Finish(){
+        GetResults();
+        Destroy();
+        activity.FinishExperiment();
     }
 
     public void Destroy(){
@@ -280,9 +288,11 @@ public class Experiment {
             return;
         }
         this.state = FINISHED;
-        GetResults();       // TODO - Complete finish screen
-        Destroy();
-        activity.FinishExperiment();
+        activity.hideAllViews();
+        if(this.finishScreen==null){
+            finishScreen = new FinishScreen(activity);
+        }
+        finishScreen.Show();
     }
 
     private boolean isAllAnswered(){
@@ -302,6 +312,7 @@ public class Experiment {
         }
         return true;
     }
+
 
 } // End of Class Experiment ----------------------------------------------- //
 

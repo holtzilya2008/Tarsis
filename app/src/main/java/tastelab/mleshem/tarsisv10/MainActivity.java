@@ -63,11 +63,21 @@ public class MainActivity extends Activity {
         views.add(findViewById(R.id.finishButton));
         views.add(findViewById(R.id.finishLayout));
         views.add(findViewById(R.id.finishQeustion));
+        hideAllViews();
+    }
+
+    public void hideAllViews(){
         for (View v: views){
             v.setVisibility(View.GONE);
         }
     }
 
+    public Experiment getCurrentExperiment(){
+        if (current == null) {
+            Log.d(TAG,"BUG MainActivity: Experiment is null");
+        }
+        return current;
+    }
 /* ----------------------------- Public Methods ---------------------------- */
 
     public void StartExperiment(){
