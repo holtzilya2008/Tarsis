@@ -44,14 +44,8 @@ public class Question {
     public static final int STRONG = 0;
     public static final int TASTY = 1;
 
-    private static String SIDRA_WORD;
-    private static String TARSIS_WORD;
-    private static String QUESTION_STRONG;
-    private static String QUESTION_TASTY;
 
     private static final int INIT_ANSWER = -1;
-    private static int DEFAULT_PROGRESS;
-    private static int MAX_PROGRESS;
 
     //Comparing between questions (for output sorting)
     private static final int GREATER = 1;
@@ -77,14 +71,6 @@ public class Question {
         this.order = order;
         this.about = about;
         this.isActive = false;
-
-        this.DEFAULT_PROGRESS =activity.getResources().getInteger(R.integer.default_progress);
-        this.MAX_PROGRESS = activity.getResources().getInteger(R.integer.max_progress);
-        this.SIDRA_WORD =activity.getResources().getString(R.string.sidra_word);
-        this.TARSIS_WORD = activity.getResources().getString(R.string.tarsis_word);
-        this.QUESTION_STRONG = activity.getResources().getString(R.string.strong_question);
-        this.QUESTION_TASTY = activity.getResources().getString(R.string.tasty_question);
-
         loadQuestionEnvironment();
     }
 
@@ -143,7 +129,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return ""+printZeros()+answer;
+        return ""+Helper.printZeros(answer)+answer;
     }
 
 /* ----------------------------- Object Comparator ------------------------- */
@@ -192,17 +178,17 @@ public class Question {
 
     private void updateEnvironment(){
         if(about == STRONG) {
-            this.questionText.setText(QUESTION_STRONG + "?");
+            this.questionText.setText(Experiment.QUESTION_STRONG + "?");
         }else if(about == TASTY){
-            this.questionText.setText(QUESTION_TASTY + "?");
+            this.questionText.setText(Experiment.QUESTION_TASTY + "?");
         }
-        this.questionProperties.setText(SIDRA_WORD + " " + this.order + "   " +
-                                        TARSIS_WORD + " " + this.tarsisFake);
+        this.questionProperties.setText(Experiment.SIDRA_WORD + " " + this.order + "   " +
+                Experiment.TARSIS_WORD + " " + this.tarsisFake);
         if(isAnswered) {
             showAnswer();
         }else{
-            seekBar.setProgress(DEFAULT_PROGRESS);
-            String defaultAnswer = ""+DEFAULT_PROGRESS + "/" + MAX_PROGRESS;
+            seekBar.setProgress(Experiment.DEFAULT_PROGRESS);
+            String defaultAnswer = ""+Experiment.DEFAULT_PROGRESS + "/" + Experiment.MAX_PROGRESS;
             answerText.setText(defaultAnswer);
             Log.d(TAG,"Question" + qid + " :Is not been answered yet, " +
                     "setting the default values");
@@ -211,21 +197,10 @@ public class Question {
 
     private void showAnswer(){
         seekBar.setProgress(answer);
-        String ans = "" + answer+"/"+MAX_PROGRESS;
+        String ans = "" + answer+"/"+Experiment.MAX_PROGRESS;
         answerText.setText(ans);
     }
 
-    private String printZeros(){
-        int tmp = this.answer;
-        String zeros = "";
-        int count = 0;
-        while((tmp/=10)!=0){
-            count++;
-        }
-        for(int i=0;i<2-count;i++){
-            zeros = zeros +"0";
-        }
-        return zeros;
-    }
+
 
 } // End of Class Question ------------------------------------------------- //

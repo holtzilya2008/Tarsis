@@ -18,7 +18,6 @@ public class Experiment {
 
     // Experiment id:
     private Sequence sequence;
-    private int mode;  //Salty->Sweet or Sweet->Salty
 
     // State Machine
     private ArrayList<Question> questions;
@@ -31,6 +30,9 @@ public class Experiment {
     private SeekBar tastyBar;
     private ImageButton backButton;
     private ImageButton nextButton;
+
+    //Controller
+    private Controller controller = Controller.getInstance();
 
 /* ---------------------------- Constant Values ---------------------------- */
 
@@ -53,6 +55,15 @@ public class Experiment {
     private static final int DESTROYED = 404;   /* This object is ready to be
                                                    destroyed                */
 
+    //Questions Environment
+    public static String SIDRA_WORD;
+    public static String TARSIS_WORD;
+    public static String QUESTION_STRONG;
+    public static String QUESTION_TASTY;
+    public static int DEFAULT_PROGRESS;
+    public static int MAX_PROGRESS;
+
+
 /* ---------------------------- DEBUG Environment -------------------------- */
 
     private static final String TAG = "Experiment";
@@ -60,13 +71,19 @@ public class Experiment {
 /* ---------------------------- Object Construction ------------------------ */
 
     public Experiment(MainActivity activity,
-                      Sequence sequence,int mode){
-        this.mode = mode;
+                      Sequence sequence){
         this.activity = activity;
         this.sequence = sequence;
         prepareEnvironment();
         prepareQuestions();
         this.state = INIT;
+
+        this.DEFAULT_PROGRESS =activity.getResources().getInteger(R.integer.default_progress);
+        this.MAX_PROGRESS = activity.getResources().getInteger(R.integer.max_progress);
+        this.SIDRA_WORD =activity.getResources().getString(R.string.sidra_word);
+        this.TARSIS_WORD = activity.getResources().getString(R.string.tarsis_word);
+        this.QUESTION_STRONG = activity.getResources().getString(R.string.strong_question);
+        this.QUESTION_TASTY = activity.getResources().getString(R.string.tasty_question);
     }
 
 /* ----------------------------- Public Methods ---------------------------- */
@@ -77,7 +94,9 @@ public class Experiment {
 
     public Result GetResults(){
         if(state == FINISHED){
-            return new Result(questions);
+            Result result = new Result(questions);
+            controller.getExperimentData().SetResult(result);
+            return result;
         }
         Log.d(TAG,"BUG method GetResults can't be called in this state!\n" +
         "State =  "+state);
@@ -97,7 +116,6 @@ public class Experiment {
         this.backButton.setVisibility(View.GONE);
         this.nextButton.setVisibility(View.GONE);
         this.current = -1;
-        activity.FinishExperiment();
     }
 
 /* ----------------------------- Object Methods ---------------------------- */
@@ -264,6 +282,7 @@ public class Experiment {
         this.state = FINISHED;
         GetResults();       // TODO - Complete finish screen
         Destroy();
+        activity.FinishExperiment();
     }
 
     private boolean isAllAnswered(){
