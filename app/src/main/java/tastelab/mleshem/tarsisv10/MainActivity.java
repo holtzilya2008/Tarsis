@@ -62,7 +62,8 @@ public class MainActivity extends Activity {
         views.add(findViewById(R.id.questionText));
         views.add(findViewById(R.id.finishButton));
         views.add(findViewById(R.id.finishLayout));
-        views.add(findViewById(R.id.finishQeustion));
+        views.add(findViewById(R.id.finishText));
+        views.add(findViewById(R.id.reviewButton));
         hideAllViews();
     }
 

@@ -92,9 +92,11 @@
         android:gravity="center"
         android:textAlignment="gravity"
         android:layout_below="@+id/qproperties"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"/>
 
     <TextView
+        android:id="@+id/qproperties"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qproperties_text_h"
         android:background="@android:color/transparent"
@@ -104,10 +106,10 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textColorHighlight="@android:color/holo_red_light"
-        android:id="@+id/qproperties"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:visibility="invisible"/>
 
 
     <FrameLayout
@@ -117,12 +119,17 @@
         android:nestedScrollingEnabled="false"
         android:visibility="gone">
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:id="@+id/finishQeustion"
-            android:layout_gravity="center_horizontal|top"
-            android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/finishText"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/finish_text_h"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/finish_text_size"
+            android:text="@string/finish_text"
+            android:textStyle="bold"
+            android:gravity="center|top"
+            android:textAlignment="gravity"/>
 
         <ImageButton
             android:layout_width="@dimen/rect_buttons_w"

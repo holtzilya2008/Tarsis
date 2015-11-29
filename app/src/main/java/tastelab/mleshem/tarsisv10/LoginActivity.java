@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.text.SimpleDateFormat;
@@ -79,6 +81,13 @@ public class LoginActivity extends Activity {
                 checkIfAllFilled();
             }
         });
+        this.editSubject.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                checkIfAllFilled();
+                return false;
+            }
+        });
     }
 
     private void prepareButtons(){
@@ -116,7 +125,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 seqIndex = position;
-                checkIfAllFilled();
+                    checkIfAllFilled();
             }
 
             @Override

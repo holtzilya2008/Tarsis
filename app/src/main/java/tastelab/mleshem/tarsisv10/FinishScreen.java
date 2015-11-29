@@ -4,6 +4,7 @@ import android.media.Image;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -18,27 +19,35 @@ public class FinishScreen {
     private FrameLayout finishLayout;
     private ImageButton finishButton;
     private ImageButton reviewButton;
+    private TextView finishText;
     private Experiment current;
 
 /* ---------------------------- Constant Values ---------------------------- */
+
+    private static String FINISH_TEXT = "";
 
 /* ---------------------------- DEBUG Environment -------------------------- */
 
 /* ---------------------------- Object Construction ------------------------ */
 
-    public FinishScreen(MainActivity activity){
+    public FinishScreen(MainActivity activity) {
         this.activity = activity;
-        this.finishButton = (ImageButton)activity.findViewById(R.id.finishButton);
-        this.reviewButton = (ImageButton)activity.findViewById(R.id.reviewButton);
-        this.finishLayout = (FrameLayout)activity.findViewById(R.id.finishLayout);
+        this.finishButton = (ImageButton) activity.findViewById(R.id.finishButton);
+        this.reviewButton = (ImageButton) activity.findViewById(R.id.reviewButton);
+        this.finishText = (TextView) activity.findViewById(R.id.finishText);
+        this.finishLayout = (FrameLayout) activity.findViewById(R.id.finishLayout);
         this.current = activity.getCurrentExperiment();
+        this.FINISH_TEXT = activity.getResources().getString(R.string.finish_text);
+        this.FINISH_TEXT = FINISH_TEXT+"?";
+        this.finishText.setText(FINISH_TEXT);
         setButtonListeners();
+        Hide();
     }
-
 /* ----------------------------- Public Methods ---------------------------- */
 
     public void Show(){
         finishLayout.setVisibility(View.VISIBLE);
+        finishText.setVisibility(View.VISIBLE);
         finishButton.setVisibility(View.VISIBLE);
         reviewButton.setVisibility(View.VISIBLE);
     }
@@ -46,6 +55,7 @@ public class FinishScreen {
     public void Hide(){
         finishButton.setVisibility(View.GONE);
         reviewButton.setVisibility(View.GONE);
+        finishText.setVisibility(View.GONE);
         finishLayout.setVisibility(View.GONE);
     }
 

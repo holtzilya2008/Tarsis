@@ -50,8 +50,8 @@ public class ExperimentData {
 
     public String PrintOutput(){
         if(isResultPresent) {
-            return "" + printMode() + " \t" +
-                    sequence.toOutput() + " \t" +
+            return "" + printMode() + "\n" +
+                    sequence.toOutput() + "\n" +
                     result.getOutput();
         }
         Log.d(TAG,"BUG : Result is not present");
