@@ -50,8 +50,8 @@ public class ExperimentData {
 
     public String PrintOutput(){
         if(isResultPresent) {
-            return "" + printMode() + "\n" +
-                    sequence.toOutput() + "\n" +
+            return "" + printMode() + Helper.COMMA +
+                    sequence.toOutput() + Helper.COMMA +
                     result.getOutput();
         }
         Log.d(TAG,"BUG : Result is not present");
@@ -75,8 +75,14 @@ public class ExperimentData {
 
 /* ---------------------------- Private Methods ---------------------------- */
 
-    public String printMode(){
-        return "" + Helper.printZeros(mode)+mode;
+    private String printMode(){
+        String s = "";
+        if(mode == Helper.SWEET_MODE){
+            s = s + Helper.SWEET;
+        }else{
+            s = s + Helper.SALTY;
+        }
+        return s;
     }
 
 } // End of Class ExperimentData ------------------------------------------- //

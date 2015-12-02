@@ -51,7 +51,7 @@ public class Result {
     private void makeOutput(){
         output = "";
         for(Question q : answers){
-            output = output + q + "\n";
+            output = output + q + Helper.COMMA;
         }
     }
 

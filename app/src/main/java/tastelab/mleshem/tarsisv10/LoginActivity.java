@@ -2,6 +2,7 @@ package tastelab.mleshem.tarsisv10;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.text.SimpleDateFormat;
@@ -30,11 +32,16 @@ public class LoginActivity extends Activity {
     public Controller controller = Controller.getInstance();
 
     private ImageButton startButton;
-    private EditText editExptor;
-    private EditText editSubject;
-    private ToggleButton modeButton;
-    private Spinner sequenceSpinner;
 
+    private EditText editExptor;
+    private String exptorText;
+    private EditText editSubject;
+    private String subjectText;
+
+    private ToggleButton modeButton;
+    private int mode;
+
+    private Spinner sequenceSpinner;
     ArrayList<String> sequences;
     int seqIndex;
 
@@ -53,6 +60,10 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         currentActivity = this;
+        exptorText = "";
+        subjectText = "";
+        mode = Helper.SALTY_MODE;
+        seqIndex = NOTHING_CHOSEN;
         prepareSpinner();
         prepareViews();
         prepareButtons();
@@ -125,7 +136,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 seqIndex = position;
-                    checkIfAllFilled();
+                checkIfAllFilled();
             }
 
             @Override
@@ -141,6 +152,7 @@ public class LoginActivity extends Activity {
         if( (seqIndex != NOTHING_CHOSEN)&&
            (!(editExptor.getText().toString().isEmpty()))&&
            (!(editSubject.getText().toString().isEmpty())) ){
+           saveFeilds();
            startButton.setVisibility(View.VISIBLE);
            startButton.bringToFront();
            return true;
@@ -149,22 +161,25 @@ public class LoginActivity extends Activity {
         return false;
     }
 
+    private void saveFeilds(){
+        exptorText = editExptor.getText().toString();
+        subjectText = editSubject.getText().toString();
+        if(modeButton.isChecked()){
+            mode = Helper.SWEET_MODE;
+        }else{
+            mode = Helper.SALTY_MODE;
+        }
+    }
+
     private void prepareExperiment(){
         if(!checkIfAllFilled()){
             Log.d(TAG, "BUG: reached prepareExperiment when not all filled");
             return;
         }
-        String exptor = editExptor.getText().toString();
-        String subject = editSubject.getText().toString();
+        saveFeilds();
         String dateAndTime = getDateAndTime();
-        int mode;
-        if(modeButton.isChecked()){
-            mode = 1;
-        }else{
-            mode = 0;
-        }
         Sequence seq = new Sequence(sequences.get(seqIndex));
-        controller.setExperimentData(exptor,subject,dateAndTime,mode,seq);
+        controller.setExperimentData(exptorText,subjectText,dateAndTime,mode,seq);
     }
 
     private String getDateAndTime(){

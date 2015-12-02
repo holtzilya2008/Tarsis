@@ -64,6 +64,10 @@ public class MainActivity extends Activity {
         views.add(findViewById(R.id.finishLayout));
         views.add(findViewById(R.id.finishText));
         views.add(findViewById(R.id.reviewButton));
+        views.add(findViewById(R.id.veryTastyText));
+        views.add(findViewById(R.id.veryStrongText));
+        views.add(findViewById(R.id.notTastyText));
+        views.add(findViewById(R.id.notStrongText));
         hideAllViews();
     }
 
@@ -131,13 +135,12 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "There is no email client installed.");
         }
-
     }
 
     private void logResults(){
         String text = controller.getExperimentData().PrintOutput();
         Log.d(TAG,"Output: "+text);
-        File logfile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File logfile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         logfile = new File(logfile,controller.getExperimentData().PrintFileName()+".txt");
         if (!logfile.exists())
         {

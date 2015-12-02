@@ -4,9 +4,12 @@
 
     ***  Information about current version Here
 
-	*** Application: Tarsis v 1.0
-	*** Current Version :  1.0 (Complete, Pilot)
+	*** Application: Tarsis v 1.1
+	*** Current Version :  1.1
 
 	Features added for the current version:
 
+	* CSV output files sent via Gmail
+	* Background and question environments designed according to customer needs
+	* some bug fixes preformed
 */

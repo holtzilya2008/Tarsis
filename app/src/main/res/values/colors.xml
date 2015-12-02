@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="black">@android:color/black</color>
     <color name="transparent">@android:color/transparent</color>
+    <color name="text_back">@android:color/transparent</color>
+    <color name="main_text_color">@android:color/black</color>
     <color name="white">@android:color/white</color>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tarsis v1.0</string>
+    <string name="app_name">Tarsis v1.1</string>
 
     //Question Strings
 
@@ -10,6 +10,11 @@
     <string name="strong_question">עד כמה חזק</string>
     <string name="tasty_question">עד כמה טעים</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="very_tasty">מאוד\nטעים</string>
+    <string name="not_tasty">לא\nטעים</string>
+    <string name="very_strong">מאוד\nחזק</string>
+    <string name="not_strong">לא\nחזק</string>
+
 
     <string name="finish_text">האם סיימת</string>
 

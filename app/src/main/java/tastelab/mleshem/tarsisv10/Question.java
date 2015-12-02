@@ -33,6 +33,8 @@ public class Question {
     //Question and answer environment
     private TextView questionText;
     private TextView questionProperties;
+    private TextView very_d;        //descriptor eg. very tasty
+    private TextView not_d;         //descriptor eg. not tasty
     private TextView answerText; // X/100
     private SeekBar seekBar;
     private int answer;
@@ -43,6 +45,7 @@ public class Question {
 
     public static final int STRONG = 0;
     public static final int TASTY = 1;
+
 
 
     private static final int INIT_ANSWER = -1;
@@ -80,6 +83,8 @@ public class Question {
         updateEnvironment();
         this.questionProperties.setVisibility(View.VISIBLE);
         this.questionText.setVisibility(View.VISIBLE);
+        this.very_d.setVisibility(View.VISIBLE);
+        this.not_d.setVisibility(View.VISIBLE);
         this.answerText.setVisibility(View.VISIBLE);
         this.seekBar.setVisibility(View.VISIBLE);
         this.isActive = true;
@@ -88,6 +93,8 @@ public class Question {
     public void Close(){
         this.questionProperties.setVisibility(View.GONE);
         this.questionText.setVisibility(View.GONE);
+        this.very_d.setVisibility(View.GONE);
+        this.not_d.setVisibility(View.GONE);
         this.answerText.setVisibility(View.GONE);
         this.seekBar.setVisibility(View.GONE);
         this.isActive = false;
@@ -168,9 +175,13 @@ public class Question {
         if(this.about == STRONG) {
             this.answerText = (TextView) activity.findViewById(R.id.strongText);
             this.seekBar = (SeekBar) activity.findViewById(R.id.strongBar);
+            this.very_d = (TextView) activity.findViewById(R.id.veryStrongText);
+            this.not_d = (TextView) activity.findViewById(R.id.notStrongText);
         }else if(this.about == TASTY){
             this.answerText = (TextView)activity.findViewById(R.id.tastyText);
             this.seekBar = (SeekBar)activity.findViewById(R.id.tastyBar);
+            this.very_d = (TextView)activity.findViewById(R.id.veryTastyText);
+            this.not_d = (TextView)activity.findViewById(R.id.notTastyText);
         }
         this.answer = INIT_ANSWER;
         this.isAnswered = false;
@@ -200,7 +211,5 @@ public class Question {
         String ans = "" + answer+"/"+Experiment.MAX_PROGRESS;
         answerText.setText(ans);
     }
-
-
 
 } // End of Class Question ------------------------------------------------- //

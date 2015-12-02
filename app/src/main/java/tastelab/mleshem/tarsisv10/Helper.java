@@ -18,6 +18,13 @@ public class Helper {
 
     public static final int MAX_ZEROS = 2;
 
+    //MODE
+    public static final int SALTY_MODE = 0;
+    public static final String SALTY = "Salty";
+    public static final int SWEET_MODE = 1;
+    public static final String SWEET = "Sweet";
+    public static final String COMMA = ",";
+
 /* ---------------------------- DEBUG Environment -------------------------- */
 
 /* -------------------------- Singleton Construction ----------------------- */

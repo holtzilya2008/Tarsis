@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@drawable/on_table"
-    tools:context=".MainActivity">
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context=".MainActivity"
+                android:background="#c0ffff">
+
+
+    <!--  ********************** How Tasty? **************************** -->
 
     <SeekBar
         android:id="@+id/tastyBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/progress_height"
-        android:background="@android:color/black"
         android:max="@integer/max_progress"
         android:progress="@integer/default_progress"
         android:layout_above="@+id/backButton"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/seek_back"
+        android:thumb="@drawable/thumb"
+        android:progressDrawable="@drawable/progress"/>
 
     <TextView
         android:id="@+id/tastyText"
         android:layout_width="@dimen/progress_text_w"
         android:layout_height="@dimen/progress_text_h"
-        android:background="@color/black"
         android:text="100 / 100"
-        android:textColor="@color/white"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"
         android:textSize="@dimen/progress_text_size"
         android:textStyle="bold"
         android:gravity="center"
@@ -35,31 +40,108 @@
         android:layout_above="@id/tastyBar"
         android:layout_centerInParent="true"/>
 
+    <TextView
+        android:id="@+id/veryTastyText"
+        android:layout_width="@dimen/descriptor_text_w"
+        android:layout_height="@dimen/descriptor_text_h"
+        android:text="@string/very_tasty"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"
+        android:textSize="@dimen/progress_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:layout_above="@id/tastyBar"
+        android:layout_alignEnd="@id/tastyBar"/>
+
+    <TextView
+        android:id="@+id/notTastyText"
+        android:layout_width="@dimen/descriptor_text_w"
+        android:layout_height="@dimen/descriptor_text_h"
+        android:text="@string/not_tasty"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"
+        android:textSize="@dimen/progress_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAlignment="gravity"
+        android:layout_above="@id/tastyBar"
+        android:layout_alignStart="@id/tastyBar"/>
+
+
+
+
+
+
+
+
+
+
+    <!--  ********************** How Strong? **************************** -->
+
     <SeekBar
         android:id="@+id/strongBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/progress_height"
-        android:background="@android:color/black"
         android:max="@integer/max_progress"
         android:progress="@integer/default_progress"
-        android:progressBackgroundTint="#ffffff"
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:background="@drawable/seek_back"
+        android:thumb="@drawable/thumb"
+        android:progressDrawable="@drawable/progress"
+        />
 
     <TextView
         android:layout_width="@dimen/progress_text_w"
         android:layout_height="@dimen/progress_text_h"
-        android:background="@color/black"
         android:text="100 / 100"
-        android:textColor="@color/white"
         android:textSize="@dimen/progress_text_size"
         android:textStyle="bold"
         android:gravity="center"
         android:textAlignment="center"
         android:id="@+id/strongText"
         android:layout_above="@id/strongBar"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"/>
+
+    <TextView
+        android:layout_width="@dimen/descriptor_text_w"
+        android:layout_height="@dimen/descriptor_text_h"
+        android:text="@string/not_strong"
+        android:textSize="@dimen/progress_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:id="@+id/notStrongText"
+        android:layout_above="@id/strongBar"
+        android:layout_alignStart="@id/strongBar"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"/>
+
+    <TextView
+        android:layout_width="@dimen/descriptor_text_w"
+        android:layout_height="@dimen/descriptor_text_h"
+        android:text="@string/very_strong"
+        android:textSize="@dimen/progress_text_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:id="@+id/veryStrongText"
+        android:layout_above="@id/strongBar"
+        android:layout_alignEnd="@id/strongBar"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"/>
+
+
+
+
+
+
+
+    <!--  ********************** Question Environment ******************** -->
 
     <ImageButton
         android:layout_width="@dimen/round_buttons_size"
@@ -85,30 +167,40 @@
         android:id="@+id/questionText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/question_text_h"
-        android:background="@android:color/transparent"
-        android:textColor="@android:color/white"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"
         android:textSize="@dimen/question_text_size"
         android:text="@string/tasty_question"
         android:textStyle="bold"
         android:gravity="center"
         android:textAlignment="gravity"
+        android:visibility="visible"
         android:layout_below="@+id/qproperties"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentEnd="true"/>
 
     <TextView
+        android:id="@+id/qproperties"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qproperties_text_h"
-        android:background="@android:color/transparent"
-        android:textColor="@android:color/white"
+        android:background="@color/text_back"
+        android:textColor="@color/main_text_color"
         android:textSize="@dimen/qproperties_text_size"
         android:text="@string/demo_qproperties"
         android:textStyle="bold"
         android:gravity="center"
         android:textColorHighlight="@android:color/holo_red_light"
-        android:id="@+id/qproperties"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:visibility="visible"/>
+
+
+
+
+
+
+
+    <!--  ********************** Finish Screen ************************** -->
 
     <FrameLayout
         android:layout_width="fill_parent"
@@ -121,8 +213,8 @@
             android:id="@+id/finishText"
             android:layout_width="match_parent"
             android:layout_height="@dimen/finish_text_h"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/white"
+            android:background="@color/text_back"
+            android:textColor="@color/main_text_color"
             android:textSize="@dimen/finish_text_size"
             android:text="@string/finish_text"
             android:textStyle="bold"
@@ -148,16 +240,5 @@
             android:background="@android:color/transparent"/>
 
     </FrameLayout>
-<!--
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="120dp"
-        android:text="TEST land"
-        android:textSize="30dp"
-        android:id="@+id/testButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
--->
-
 
 </RelativeLayout>
