@@ -49,6 +49,7 @@ public class Question {
 
 
     private static final int INIT_ANSWER = -1;
+    private static final float ALPHA = (float)0.5;
 
     //Comparing between questions (for output sorting)
     private static final int GREATER = 1;
@@ -88,6 +89,7 @@ public class Question {
         this.answerText.setVisibility(View.VISIBLE);
         this.seekBar.setVisibility(View.VISIBLE);
         this.isActive = true;
+        setHalfTransparent(!isAnswered);
     }
 
     public void Close(){
@@ -104,6 +106,7 @@ public class Question {
         if(isActive) {
             this.answer = ans;
             this.isAnswered = true;
+            setHalfTransparent(!isAnswered);
             showAnswer();
         }
     }
@@ -210,6 +213,18 @@ public class Question {
         seekBar.setProgress(answer);
         String ans = "" + answer+"/"+Experiment.MAX_PROGRESS;
         answerText.setText(ans);
+    }
+
+    private void setHalfTransparent(boolean x){
+        if(!isActive){
+            Log.d(TAG,"BUG setHalfTransparent called when not Active!");
+            return;
+        }
+        if (x){
+            seekBar.setAlpha(ALPHA);
+        } else{
+            seekBar.setAlpha((float)1);
+        }
     }
 
 } // End of Class Question ------------------------------------------------- //

@@ -62,7 +62,7 @@ public class LoginActivity extends Activity {
         currentActivity = this;
         exptorText = "";
         subjectText = "";
-        mode = Helper.SALTY_MODE;
+        mode = ExperimentData.SALTY_MODE;
         seqIndex = NOTHING_CHOSEN;
         prepareSpinner();
         prepareViews();
@@ -165,9 +165,9 @@ public class LoginActivity extends Activity {
         exptorText = editExptor.getText().toString();
         subjectText = editSubject.getText().toString();
         if(modeButton.isChecked()){
-            mode = Helper.SWEET_MODE;
+            mode = ExperimentData.SWEET_MODE;
         }else{
-            mode = Helper.SALTY_MODE;
+            mode = ExperimentData.SALTY_MODE;
         }
     }
 

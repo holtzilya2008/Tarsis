@@ -42,6 +42,7 @@ public class Experiment {
     private static final int LAST = QUESTIONS -1;
     private static final int FIRST_SIDRA = 1;
     private static final int LAST_SIDRA = 2;
+    private static final float ALPHA = (float)0.3;
 
     //State Machine
     private static final int INIT = 0;          /* Ready to start */
@@ -108,6 +109,7 @@ public class Experiment {
     public void Review(){
         if(state == FINISHED){
             Last();
+            return;
         }
         Log.d(TAG,"BUG method Review shouldn't be called in this state!\n" +
                 "State =  "+state);
@@ -142,7 +144,7 @@ public class Experiment {
 
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
-
+                        firstTouch();
                     }
 
                     @Override
@@ -237,6 +239,11 @@ public class Experiment {
     }
 
     private void Next(){
+        if(state == NEW_QUESTION){
+            Toast.makeText(activity, "50/100 ?", Toast.LENGTH_SHORT).show();
+            updateCurrentQuestion(DEFAULT_PROGRESS);
+            return;
+        }
         if(current == LAST){
             loadFinishScreen();
             return;
@@ -268,13 +275,15 @@ public class Experiment {
         }else {
             backButton.setVisibility(View.VISIBLE);
         }
+        nextButton.setVisibility(View.VISIBLE);
         if(questions.get(current).isAnswered()){
-            nextButton.setVisibility(View.VISIBLE);
             state = OLD_QUESTION;
+            Log.d(TAG,"state = OLD");
         }else{
-            nextButton.setVisibility(View.GONE);
+            Log.d(TAG,"state = NEW");
             state = NEW_QUESTION;
         }
+        setHalfTransparent();
     }
 
     private void loadFinishScreen(){
@@ -283,8 +292,8 @@ public class Experiment {
             Log.d(TAG,"BUG : Finish request when not all answered!");
             return;
         }
-        if(!isAllClosed()){
-            Log.d(TAG,"BUG : Finish Request when not all closed");
+        if(!isAllClosed()) {
+            Log.d(TAG, "BUG : Finish Request when not all closed");
             return;
         }
         this.state = FINISHED;
@@ -313,6 +322,19 @@ public class Experiment {
         return true;
     }
 
+    private void setHalfTransparent(){
+        if(state == NEW_QUESTION){
+            nextButton.setAlpha(ALPHA);
+        }else{
+            nextButton.setAlpha((float)1);
+        }
+    }
+
+    private void firstTouch(){
+        if (state == NEW_QUESTION){
+            updateCurrentQuestion(DEFAULT_PROGRESS);
+        }
+    }
 
 } // End of Class Experiment ----------------------------------------------- //
 

@@ -4,6 +4,9 @@ import android.util.Log;
 
 /**
  * Created by ilya on 11/22/15.
+ * The class stores the experiment data given by the experimentor in the
+ * login Activity. The class also responsible to print the results
+ * int the right format
  */
 public class ExperimentData {
 /* -------------------------------- fields *-------------------------------- */
@@ -17,6 +20,13 @@ public class ExperimentData {
     private boolean isResultPresent;
 
 /* ---------------------------- Constant Values ---------------------------- */
+
+    //MODE
+    public static final int SALTY_MODE = 0;
+    public static final String SALTY = "Salty";
+    public static final int SWEET_MODE = 1;
+    public static final String SWEET = "Sweet";
+    public static final String COMMA = ",";
 
 /* ---------------------------- DEBUG Environment -------------------------- */
 
@@ -45,13 +55,32 @@ public class ExperimentData {
     }
 
     public String PrintFileName(){
-        return "" + experimenterName + dateAndTime + subjectName;
+        return "tarsis_" + subjectName + ".csv";
+    }
+
+    public String PrintEmailSubject(){
+        return "Tarsis : " + experimenterName + " , " + dateAndTime + " : " + subjectName;
+    }
+
+    public String PrintEmailText(){
+        return "Tarsis Experiment results:\n" +
+                "Experimenter: " + experimenterName + "\n" +
+                "Subject: " + subjectName + "\n" +
+                "Date and Time: " + dateAndTime + "\n" +
+                "Mode: " + printMode() + "\n" +
+                "See Attached CSV file. \n \n" +
+                "Best Regards,\n" + experimenterName + ", \n" +
+                "Micah Leshem Taste Lab, University of Haifa.";
     }
 
     public String PrintOutput(){
         if(isResultPresent) {
-            return "" + printMode() + Helper.COMMA +
-                    sequence.toOutput() + Helper.COMMA +
+            return  "Tarsis" + "\n" +
+                    "Experimenter:" + COMMA + experimenterName + "\n" +
+                    "Subject:" + COMMA + subjectName + "\n" +
+                    "Time:" + COMMA + dateAndTime + "\n" +
+                    "Mode:" + COMMA + printMode() + "\n \n" +
+                    mode + COMMA + sequence.toOutput() + COMMA +
                     result.getOutput();
         }
         Log.d(TAG,"BUG : Result is not present");
@@ -77,10 +106,10 @@ public class ExperimentData {
 
     private String printMode(){
         String s = "";
-        if(mode == Helper.SWEET_MODE){
-            s = s + Helper.SWEET;
+        if(mode == SWEET_MODE){
+            s = s + SWEET;
         }else{
-            s = s + Helper.SALTY;
+            s = s + SALTY;
         }
         return s;
     }

@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -25,10 +27,11 @@ public class MainActivity extends Activity {
     private MainActivity currentActivity;
     Controller controller = Controller.getInstance();
     private ArrayList<View> views;
-
-    private Button testButton;
     private Experiment current;
 
+    //Sending output
+    private File path = null;
+    private File outFile = null;
 
 /* ---------------------------- Constant Values ---------------------------- */
 
@@ -95,7 +98,7 @@ public class MainActivity extends Activity {
             Log.d(TAG,"BUG : FinishExperiment called when result still not set");
             return;
         }
-        logResults();
+        createOutputFile();
         emailResults();
         final CountDownTimer shutdown = new CountDownTimer(5000,1000) {
             @Override
@@ -109,8 +112,6 @@ public class MainActivity extends Activity {
         }.start();
     }
 
-
-
 /* --------------------------- Qverride Methods ---------------------------- */
 
 /* ----------------------------- Object Methods ---------------------------- */
@@ -118,17 +119,14 @@ public class MainActivity extends Activity {
 /* ---------------------------- Private Methods ---------------------------- */
 
     private void emailResults(){
-
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-        emailIntent.setData(Uri.parse("mailto:"+DEF_EMAIL));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, DEF_EMAIL);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, controller.getExperimentData().PrintFileName());
-        emailIntent.putExtra(Intent.EXTRA_TEXT, controller.getExperimentData().PrintOutput());
-
+        Intent email=new Intent(android.content.Intent.ACTION_SEND);
+        email.setType("plain/text");
+        email.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(outFile));
+        email.putExtra(Intent.EXTRA_EMAIL, DEF_EMAIL);
+        email.putExtra(Intent.EXTRA_SUBJECT, controller.getExperimentData().PrintEmailSubject());
+        email.putExtra(Intent.EXTRA_TEXT, controller.getExperimentData().PrintEmailText());
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            startActivity(Intent.createChooser(email, "Send mail..."));
             finish();
         }
         catch (android.content.ActivityNotFoundException ex) {
@@ -137,39 +135,27 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void logResults(){
+    private void createOutputFile() {
+        String filename = controller.getExperimentData().PrintFileName();
         String text = controller.getExperimentData().PrintOutput();
-        Log.d(TAG,"Output: "+text);
-        File logfile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        logfile = new File(logfile,controller.getExperimentData().PrintFileName()+".txt");
-        if (!logfile.exists())
-        {
-            try
-            {
-                logfile.createNewFile();
-            }
-            catch (IOException e)
-            {
-                // TODO Auto-generated catch block
-                Log.d(TAG, "in first catch");
-                e.printStackTrace();
-            }
+        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        outFile = new File(path, filename);
+        try {
+            path.mkdirs();
+            OutputStream os = new FileOutputStream(outFile);
+            os.write(text.getBytes());
+            os.close();
+            MediaScannerConnection.scanFile(this,
+                    new String[]{outFile.toString()}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Log.i("ExternalStorage", "Scanned " + path + ":");
+                            Log.i("ExternalStorage", "-> uri=" + uri);
+                        }
+                    });
+        } catch (IOException e) {
+            Log.w("ExternalStorage", "Error writing " + outFile, e);
         }
-        try
-        {
-            //BufferedWriter for performance, true to set append to file flag
-            BufferedWriter buf = new BufferedWriter(new FileWriter(logfile, true));
-            buf.append(text);
-            buf.newLine();
-            buf.close();
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            Log.d(TAG, "in second catch");
-            e.printStackTrace();
-        }
-        MediaScannerConnection.scanFile(this, new String[]{logfile.toString()}, null, null);
     }
 
 } // End of MainActivity --------------------------------------------------- //
