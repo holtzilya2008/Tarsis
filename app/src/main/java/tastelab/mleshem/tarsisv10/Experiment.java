@@ -145,11 +145,12 @@ public class Experiment {
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
                         firstTouch();
+                        questions.get(current).showAnswerText();
                     }
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-
+                        questions.get(current).hideAnswerText();
                     }
                 };
 

@@ -86,7 +86,7 @@ public class Question {
         this.questionText.setVisibility(View.VISIBLE);
         this.very_d.setVisibility(View.VISIBLE);
         this.not_d.setVisibility(View.VISIBLE);
-        this.answerText.setVisibility(View.VISIBLE);
+        this.answerText.setVisibility(View.INVISIBLE);
         this.seekBar.setVisibility(View.VISIBLE);
         this.isActive = true;
         setHalfTransparent(!isAnswered);
@@ -109,6 +109,14 @@ public class Question {
             setHalfTransparent(!isAnswered);
             showAnswer();
         }
+    }
+
+    public void showAnswerText(){
+        this.answerText.setVisibility(View.VISIBLE);
+    }
+
+    public void hideAnswerText(){
+        this.answerText.setVisibility(View.INVISIBLE);
     }
 
     public boolean isAnswered(){
@@ -202,7 +210,7 @@ public class Question {
             showAnswer();
         }else{
             seekBar.setProgress(Experiment.DEFAULT_PROGRESS);
-            String defaultAnswer = ""+Experiment.DEFAULT_PROGRESS + "/" + Experiment.MAX_PROGRESS;
+            String defaultAnswer = ""+Experiment.DEFAULT_PROGRESS;
             answerText.setText(defaultAnswer);
             Log.d(TAG,"Question" + qid + " :Is not been answered yet, " +
                     "setting the default values");
@@ -211,7 +219,7 @@ public class Question {
 
     private void showAnswer(){
         seekBar.setProgress(answer);
-        String ans = "" + answer+"/"+Experiment.MAX_PROGRESS;
+        String ans = "" + answer;
         answerText.setText(ans);
     }
 

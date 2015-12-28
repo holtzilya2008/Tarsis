@@ -10,7 +10,7 @@
     </item>
     <item android:id="@android:id/progress">
         <scale
-            android:drawable="@drawable/full_progress"
+            android:drawable="@drawable/empty_progress"
             android:scaleWidth="100%"/>
     </item>
 

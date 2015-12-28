@@ -13,9 +13,11 @@
 
     <dimen name="progress_text_h">40dp</dimen>       <!-- RR  -->
     <dimen name="progress_text_w">130dp</dimen>      <!-- RR  -->
-    <dimen name="progress_text_size">30sp</dimen>    <!-- RR  -->
+    <dimen name="progress_text_size">20sp</dimen>    <!-- RR  -->
+
     <dimen name="descriptor_text_h">80dp</dimen>     <!-- RR  -->
     <dimen name="descriptor_text_w">100dp</dimen>    <!-- RR  -->
+    <dimen name="descriptor_text_size">32sp</dimen>    <!-- RR  -->
 
     <dimen name="qproperties_text_h">50dp</dimen>    <!-- RR  -->
     <!--<dimen name="qproperties_text_w">350dp</dimen>-->
