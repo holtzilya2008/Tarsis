@@ -36,6 +36,23 @@ public class Result {
         return output;
     }
 
+    /* [psyFeatures]
+     * needed in case the mode is Sweet->Salty and the output will be
+     * posted into the SPSS system without manual reordering */
+    public String printOppositeMode(){
+        Log.d(TAG,"Reached printOppositeMode");
+        String s = "";
+        Log.d(TAG,"Printing the second sequence");
+        for(int i = answers.size()/2;i<answers.size();i++ ){
+            s = s + answers.get(i).toString() + ExperimentData.COMMA;
+        }
+        Log.d(TAG,"Printing the first sequence");
+        for(int i = 0; i< answers.size()/2; i++ ){
+            s = s + answers.get(i).toString() + ExperimentData.COMMA;
+        }
+        return s;
+    }
+
 /* ---------------------------- Private Methods ---------------------------- */
 
     private void copyList(ArrayList<Question> answered){

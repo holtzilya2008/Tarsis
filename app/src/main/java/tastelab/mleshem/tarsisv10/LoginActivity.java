@@ -67,11 +67,12 @@ public class LoginActivity extends Activity {
         prepareSpinner();
         prepareViews();
         prepareButtons();
+        editExptor.requestFocus();
     }
 
 /* ----------------------------- Public Methods ---------------------------- */
 
-/* --------------------------- Qverride Methods ---------------------------- */
+/* --------------------------- Override Methods ---------------------------- */
 
 /* ----------------------------- Object Methods ---------------------------- */
 
@@ -83,6 +84,13 @@ public class LoginActivity extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 checkIfAllFilled();
+            }
+        });
+        this.editExptor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                checkIfAllFilled();
+                return false;
             }
         });
         this.editSubject = (EditText)findViewById(R.id.editSbject);
@@ -149,6 +157,7 @@ public class LoginActivity extends Activity {
     }
 
     private boolean checkIfAllFilled(){
+        Log.d(TAG,"Reached checkIfAllFilled");
         if( (seqIndex != NOTHING_CHOSEN)&&
            (!(editExptor.getText().toString().isEmpty()))&&
            (!(editSubject.getText().toString().isEmpty())) ){

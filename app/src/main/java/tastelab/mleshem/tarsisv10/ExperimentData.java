@@ -81,7 +81,8 @@ public class ExperimentData {
                     "Time:" + COMMA + dateAndTime + "\n" +
                     "Mode:" + COMMA + printMode() + "\n \n" +
                     mode + COMMA + sequence.toOutput() + COMMA +
-                    result.getOutput();
+                    result.getOutput() + "\n" +
+                    printSPSSline();
         }
         Log.d(TAG,"BUG : Result is not present");
         return "";
@@ -103,6 +104,15 @@ public class ExperimentData {
 /* ----------------------------- Object Methods ---------------------------- */
 
 /* ---------------------------- Private Methods ---------------------------- */
+
+    /* ver 1.2 [psyFeatures]
+     * if the mode is SW->SA, print the output in SA->SW order */
+    private String printSPSSline(){
+        if(mode == SWEET_MODE){
+            return "SPSS:" + COMMA + sequence.toOutput() + COMMA + result.printOppositeMode();
+        }
+        return  "";
+    }
 
     private String printMode(){
         String s = "";

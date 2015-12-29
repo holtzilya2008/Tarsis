@@ -4,8 +4,8 @@
 
     ***  Information about current version Here
 
-	*** Application: Tarsis v 1.11
-	*** Current Version :  1.11
+	*** Application: Tarsis v 1.12
+	*** Current Version :  1.12
 
 	Features added for the current version:
 
@@ -13,4 +13,7 @@
 	* Background and question environments designed according to customer needs
 	* some bug fixes preformed
 	* 1.11 Numbers not constantly shown (response to customer request)
+	* 1.12 [psyFeatures] Salty->sweet changed to Sa->Sw
+	* 1.12 [psyFeatures] editor focus on Experimentor feild (Bug-Fix)
+	* 1.12 [psyFeatures] SPSS Line Feature added
 */
